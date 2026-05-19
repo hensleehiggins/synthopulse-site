@@ -151,7 +151,7 @@ const tourSections = [
     eyebrow: "Receipt intake",
     title: "Stage vendor costs safely before they affect margins.",
     text: "Receipt Intake lets operators upload vendor invoices, parse line items, review extracted costs, and approve pricing updates before anything touches operating data.",
-    image: "/kitchenpulse-receipt-intake-upload.png",
+    image: "/kitchenpulse-receipt-intake-pricing-review.png",
     alt: "KitchenPulse receipt intake pricing update review",
     icon: ReceiptText,
     points: [
