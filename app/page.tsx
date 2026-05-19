@@ -255,7 +255,7 @@ export default function Home() {
                 </span>
               </div>
               <img
-                src="/kitchenpulse-home-decision.png"
+                src="/kitchenpulse-home.png"
                 alt="KitchenPulse operator portal showing restaurant operating intelligence"
                 className="h-auto w-full"
               />
