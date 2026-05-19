@@ -41,12 +41,23 @@ export default function Home() {
             />
           </div>
 
-          <a
-            href="mailto:hank.higgins@synthopulse.ai"
-            className="hidden rounded-full border border-white/15 px-5 py-2 text-sm font-medium text-white/85 transition hover:border-cyan-300/60 hover:text-white sm:inline-flex"
-          >
-            Contact
-          </a>
+          <div className="hidden items-center gap-3 sm:flex">
+  <a
+    href="https://portal.synthopulse.ai"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-full bg-pulse px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_0_25px_rgba(32,211,238,0.25)] transition hover:scale-[1.02]"
+  >
+    Client Login
+  </a>
+
+  <a
+    href="mailto:info@synthopulse.ai"
+    className="rounded-full border border-white/15 px-5 py-2 text-sm font-medium text-white/85 transition hover:border-cyan-300/60 hover:text-white"
+  >
+    Contact
+  </a>
+</div>
         </header>
 
         <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
