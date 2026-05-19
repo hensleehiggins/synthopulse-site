@@ -182,7 +182,7 @@ const receiptSteps = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(32,211,238,0.20),_transparent_35%),linear-gradient(180deg,#06111f_0%,#071827_55%,#04101d_100%)] text-white">
+    <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(32,211,238,0.12),_transparent_34%),radial-gradient(circle_at_top_left,_rgba(15,118,140,0.10),_transparent_30%),linear-gradient(180deg,#020817_0%,#03111f_52%,#020817_100%)] text-white">
       <section className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 py-8 sm:px-8 lg:px-10">
         <header className="flex items-center justify-between">
           <div className="flex items-center">
