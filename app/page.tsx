@@ -143,8 +143,8 @@ export default function Home() {
 
         <footer className="flex flex-col gap-4 border-t border-white/10 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 SynthoPulse. KitchenPulse is the flagship restaurant intelligence product.</p>
-          <a href="mailto:hank.higgins@synthopulse.ai" className="text-cyan-200 hover:text-cyan-100">
-            hank.higgins@synthopulse.ai
+          <a href="mailto:info@synthopulse.ai" className="text-cyan-200 hover:text-cyan-100">
+            info@synthopulse.ai
           </a>
         </footer>
       </section>
