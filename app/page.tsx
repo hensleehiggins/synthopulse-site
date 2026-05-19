@@ -33,14 +33,12 @@ export default function Home() {
     <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(32,211,238,0.20),_transparent_35%),linear-gradient(180deg,#06111f_0%,#071827_55%,#04101d_100%)]">
       <section className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 py-8 sm:px-8 lg:px-10">
         <header className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-400/15 ring-1 ring-cyan-300/30">
-              <div className="h-4 w-4 rounded-full bg-pulse shadow-[0_0_28px_rgba(32,211,238,0.95)]" />
-            </div>
-            <div>
-              <p className="text-lg font-semibold tracking-tight">SynthoPulse</p>
-              <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/70">Operating Intelligence</p>
-            </div>
+          <div className="flex items-center">
+            <img
+              src="/synthopulse-logo.png"
+              alt="SynthoPulse"
+              className="h-10 w-auto sm:h-12"
+            />
           </div>
 
           <a
