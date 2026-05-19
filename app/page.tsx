@@ -174,9 +174,9 @@ const receiptSteps = [
     image: "/kitchenpulse-receipt-intake-parsed-lines.png",
   },
   {
-    title: "Approve cost proposals",
-    text: "Cost changes are proposed, explained, and approved before they update KitchenPulse pricing data.",
-    image: "/kitchenpulse-receipt-intake-pricing-review.png",
+  title: "Apply approved cost changes",
+  text: "Approved cost proposals update KitchenPulse pricing data only after the match and change are confirmed.",
+  image: "/kitchenpulse-receipt-intake-cost-applied.png",
   },
 ];
 
