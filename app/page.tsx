@@ -79,35 +79,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div id="kitchenpulse" className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-cyan-950/40 backdrop-blur">
-            <div className="rounded-[1.5rem] border border-cyan-300/15 bg-[#071827] p-5">
-              <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-4">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">Tonight&apos;s Shift Watch</p>
-                  <h2 className="mt-2 text-2xl font-semibold">Service pressure is elevated</h2>
-                </div>
-                <div className="rounded-full bg-amber-300/15 px-3 py-1 text-sm text-amber-100">Action Needed</div>
+          <div id="kitchenpulse" className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-3 shadow-2xl shadow-cyan-950/40 backdrop-blur">
+            <div className="overflow-hidden rounded-[1.55rem] border border-cyan-300/15 bg-[#071827]">
+              <div className="flex items-center gap-2 border-b border-white/10 bg-slate-950/45 px-4 py-3">
+                <span className="h-3 w-3 rounded-full bg-red-300/80" />
+                <span className="h-3 w-3 rounded-full bg-amber-300/80" />
+                <span className="h-3 w-3 rounded-full bg-emerald-300/80" />
+                <span className="ml-3 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">
+                  KitchenPulse operator portal
+                </span>
               </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-white/[0.055] p-4 ring-1 ring-white/10">
-                  <p className="text-sm text-slate-400">Booked Demand</p>
-                  <p className="mt-2 text-3xl font-semibold">High</p>
-                  <p className="mt-3 text-sm leading-6 text-slate-300">Private event volume and local pressure point to a stronger dinner push.</p>
-                </div>
-                <div className="rounded-2xl bg-white/[0.055] p-4 ring-1 ring-white/10">
-                  <p className="text-sm text-slate-400">Menu Focus</p>
-                  <p className="mt-2 text-3xl font-semibold">Protect winners</p>
-                  <p className="mt-3 text-sm leading-6 text-slate-300">Watch high-margin movers and prevent low-signal distractions from driving prep.</p>
-                </div>
-              </div>
-
-              <div className="mt-4 rounded-2xl bg-cyan-300/10 p-4 ring-1 ring-cyan-300/20">
-                <p className="text-sm font-semibold text-cyan-100">Recommended next move</p>
-                <p className="mt-2 text-sm leading-6 text-slate-200">
-                  Brief the manager before service, confirm event coverage, and lean into items showing profitable movement instead of chasing noisy lows.
-                </p>
-              </div>
+              <img
+                src="/kitchenpulse-home.png"
+                alt="KitchenPulse operator portal showing restaurant operating intelligence"
+                className="h-auto w-full"
+              />
             </div>
           </div>
         </div>
