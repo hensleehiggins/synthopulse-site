@@ -9,6 +9,7 @@ import {
   LockKeyhole,
   ReceiptText,
   ShieldCheck,
+  DollarSign,
   Sparkles,
   TrendingUp,
   Users,
@@ -64,9 +65,9 @@ const tourSections = [
     alt: "KitchenPulse review brief explaining the recommended action",
     icon: FileText,
     points: [
-      "Action-first operator guidance",
-      "Biggest risk and opportunity surfaced",
-      "Built for pre-service review",
+      "Action-first recommendation",
+      "Reasoning behind the call",
+      "Owner-ready context for pre-service review",
     ],
   },
   {
@@ -174,9 +175,60 @@ const receiptSteps = [
     image: "/kitchenpulse-receipt-intake-parsed-lines.png",
   },
   {
-  title: "Apply approved cost changes",
-  text: "Approved cost proposals update KitchenPulse pricing data only after the match and change are confirmed.",
-  image: "/kitchenpulse-receipt-intake-cost-applied.png",
+    title: "Apply approved cost changes",
+    text: "Approved cost proposals update KitchenPulse pricing data only after the match and change are confirmed.",
+    image: "/kitchenpulse-receipt-intake-cost-applied.png",
+  },
+];
+
+const costCenterSections = [
+  {
+    eyebrow: "Cost center",
+    title: "Turn approved receipt data into margin decisions.",
+    text: "Cost Center turns reviewed receipt lines into cost movement intelligence, showing where vendor costs are rising, where costs are easing, and which matched signals still need approval.",
+    image: "/kitchenpulse-cost-center-home.png",
+    alt: "KitchenPulse Cost Center overview showing food cost intelligence and margin signals",
+    points: [
+      "Approved receipt signals become cost movement",
+      "Cost pressure and cost relief are separated",
+      "Owners can see what needs review before it affects margin",
+    ],
+  },
+  {
+    eyebrow: "Margin watch",
+    title: "See vendor cost pressure and relief in one place.",
+    text: "KitchenPulse separates cost increases, cost decreases, and tracked items so operators can review pricing, portions, vendors, or feature strategy before hidden margin leaks build up.",
+    image: "/kitchenpulse-cost-center-watch.png",
+    alt: "KitchenPulse Cost Center margin pressure and cost relief watch sections",
+    points: [
+      "Margin pressure watch",
+      "Cost relief and opportunity view",
+      "Item-level cost movement cards",
+    ],
+  },
+  {
+    eyebrow: "Cost movement",
+    title: "Track approved cost changes as an ongoing signal.",
+    text: "The active cost movement log keeps approved receipt-driven changes visible, searchable, and ready for owner review instead of burying them in invoice history.",
+    image: "/kitchenpulse-cost-center-cost-movement.png",
+    alt: "KitchenPulse active cost movement log showing vendor cost changes",
+    points: [
+      "Approved cost movement history",
+      "Searchable item and vendor context",
+      "Suggested actions for margin review",
+    ],
+  },
+  {
+    eyebrow: "Cost signal review",
+    title: "Keep cost intelligence approval-backed.",
+    text: "Cost Links Needing Setup shows which receipt signals are matched, blocked, or ready for review before they become active Cost Movement.",
+    image: "/kitchenpulse-cost-center-cost-links.png",
+    alt: "KitchenPulse Cost Links Needing Setup and Cost Signals Awaiting Review sections",
+    points: [
+      "Matched signals ready for approval",
+      "Unlinked receipt lines stay blocked",
+      "Cost changes remain review-first",
+    ],
   },
 ];
 
@@ -194,22 +246,22 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-  <a
-    href="https://portal.synthopulse.ai"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="rounded-full bg-pulse px-3 py-2 text-xs font-semibold text-slate-950 shadow-[0_0_25px_rgba(32,211,238,0.25)] transition hover:scale-[1.02] sm:px-5 sm:text-sm"
-  >
-    Client Login
-  </a>
+            <a
+              href="https://portal.synthopulse.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-pulse px-3 py-2 text-xs font-semibold text-slate-950 shadow-[0_0_25px_rgba(32,211,238,0.25)] transition hover:scale-[1.02] sm:px-5 sm:text-sm"
+            >
+              Client Login
+            </a>
 
-  <a
-    href="mailto:info@synthopulse.ai"
-    className="hidden rounded-full border border-white/15 px-5 py-2 text-sm font-medium text-white/85 transition hover:border-cyan-300/60 hover:text-white sm:inline-flex"
-  >
-    Contact
-  </a>
-</div>
+            <a
+              href="mailto:info@synthopulse.ai"
+              className="hidden rounded-full border border-white/15 px-5 py-2 text-sm font-medium text-white/85 transition hover:border-cyan-300/60 hover:text-white sm:inline-flex"
+            >
+              Contact
+            </a>
+          </div>
         </header>
 
         <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
@@ -387,6 +439,62 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="rounded-[2.25rem] border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-black/20 sm:p-8 lg:p-10">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm text-cyan-100">
+              <DollarSign size={16} /> Cost Center
+            </div>
+            <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+              Approved receipt data becomes margin intelligence.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-slate-300">
+              Once receipt lines are reviewed, KitchenPulse turns them into cost movement signals operators can actually act on.
+            </p>
+          </div>
+
+          <div className="mt-14 space-y-16">
+            {costCenterSections.map((section, index) => (
+              <article
+                key={section.title}
+                className={`grid items-center gap-8 lg:grid-cols-2 ${
+                  index % 2 ? "lg:[&>div:first-child]:order-2" : ""
+                }`}
+              >
+                <div>
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100">
+                    <DollarSign size={15} /> {section.eyebrow}
+                  </div>
+                  <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                    {section.title}
+                  </h3>
+                  <p className="mt-5 text-lg leading-8 text-slate-300">
+                    {section.text}
+                  </p>
+                  <div className="mt-6 grid gap-3">
+                    {section.points.map((point) => (
+                      <div
+                        key={point}
+                        className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/30 px-4 py-3 text-sm text-slate-200"
+                      >
+                        <span className="h-2.5 w-2.5 rounded-full bg-pulse shadow-[0_0_18px_rgba(32,211,238,0.55)]" />
+                        {point}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-3 shadow-2xl shadow-black/20">
+                  <img
+                    src={section.image}
+                    alt={section.alt}
+                    className="h-auto w-full rounded-[1.55rem] border border-white/10"
+                  />
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
