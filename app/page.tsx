@@ -406,41 +406,49 @@ export default function Home() {
         </section>
 
         <section className="rounded-[2.25rem] border border-cyan-300/15 bg-cyan-300/[0.055] p-6 sm:p-8 lg:p-10">
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-            <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-300/10 px-4 py-2 text-sm text-emerald-100">
-                <LockKeyhole size={16} /> Review-first receipt workflow
-              </div>
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                Vendor costs are staged, parsed, and approved before they change the business.
-              </h2>
-              <p className="mt-5 leading-8 text-slate-300">
-                Receipt Intake is intentionally conservative. Uploads land in a
-                review queue first, parsed line items require human approval, and
-                pricing proposals are reviewed before KitchenPulse updates cost data.
-              </p>
-            </div>
+  <div className="mx-auto max-w-4xl text-center">
+    <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-300/10 px-4 py-2 text-sm text-emerald-100">
+      <LockKeyhole size={16} /> Review-first receipt workflow
+    </div>
+    <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+      Vendor costs are staged, parsed, and approved before they change the business.
+    </h2>
+    <p className="mt-5 text-lg leading-8 text-slate-300">
+      Receipt Intake is intentionally conservative. Uploads land in a review queue first, parsed line items require human approval, and pricing proposals are reviewed before KitchenPulse updates cost data.
+    </p>
+  </div>
 
-            <div className="grid gap-5">
-              {receiptSteps.map((step) => (
-                <div
-                  key={step.title}
-                  className="rounded-3xl border border-white/10 bg-slate-950/35 p-4"
-                >
-                  <h3 className="text-lg font-semibold">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-300">
-                    {step.text}
-                  </p>
-                  <img
-                    src={step.image}
-                    alt={step.title}
-                    className="mt-4 rounded-2xl border border-white/10"
-                  />
-                </div>
-              ))}
-            </div>
+  <div className="mt-14 space-y-16">
+    {receiptSteps.map((step, index) => (
+      <article
+        key={step.title}
+        className={`grid items-center gap-8 lg:grid-cols-2 ${
+          index % 2 ? "lg:[&>div:first-child]:order-2" : ""
+        }`}
+      >
+        <div>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100">
+            <ReceiptText size={15} /> Receipt Intake
           </div>
-        </section>
+          <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            {step.title}
+          </h3>
+          <p className="mt-5 text-lg leading-8 text-slate-300">
+            {step.text}
+          </p>
+        </div>
+
+        <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-3 shadow-2xl shadow-black/20">
+          <img
+            src={step.image}
+            alt={step.title}
+            className="h-auto w-full rounded-[1.55rem] border border-white/10"
+          />
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
 
         <section className="rounded-[2.25rem] border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-black/20 sm:p-8 lg:p-10">
           <div className="mx-auto max-w-4xl text-center">
