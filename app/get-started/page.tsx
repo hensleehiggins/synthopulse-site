@@ -89,7 +89,7 @@ const pageGuides = [
       "Tracks local demand signals, in-house events, private events, holidays, and upcoming service pressure.",
     useWhen: [
       "There is a local event that may affect traffic.",
-      "Chloe’s has an in-house or private event coming up.",
+      "Your restaurant has an in-house or private event coming up.",
       "You want to review today’s service pressure.",
     ],
     ask: [
