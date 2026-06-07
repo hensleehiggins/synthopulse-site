@@ -21,6 +21,7 @@ type CountLine = {
   storageArea: string;
   quantity: string;
   unit: string;
+  packSize: string;
   notes: string;
 };
 
@@ -32,6 +33,23 @@ const STORAGE_AREAS = [
   "Prep",
   "Office",
   "Other",
+];
+
+const COMMON_UNITS = [
+  "boxes",
+  "cases",
+  "bags",
+  "each",
+  "lb",
+  "oz",
+  "gallons",
+  "quarts",
+  "pints",
+  "bottles",
+  "cans",
+  "sleeves",
+  "trays",
+  "loaves",
 ];
 
 function KitchenPulseLockup() {
@@ -76,8 +94,28 @@ function makeLine(): CountLine {
     storageArea: "Walk-in",
     quantity: "",
     unit: "",
+    packSize: "",
     notes: "",
   };
+}
+
+function isNumericOnly(value: string) {
+  const cleaned = String(value || "").trim();
+  return cleaned !== "" && Number.isFinite(Number(cleaned));
+}
+
+function buildSubmittedNotes(line: CountLine) {
+  const parts = [];
+
+  if (line.packSize.trim()) {
+    parts.push(`Pack/size: ${line.packSize.trim()}`);
+  }
+
+  if (line.notes.trim()) {
+    parts.push(line.notes.trim());
+  }
+
+  return parts.join("\n");
 }
 
 export default function CountPage() {
@@ -94,20 +132,28 @@ export default function CountPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const validLines = useMemo(() => {
-    return lines
-      .map((line) => ({
-        ...line,
-        itemName: line.itemName.trim(),
-        storageArea: line.storageArea.trim(),
-        quantity: line.quantity.trim(),
-        unit: line.unit.trim(),
-        notes: line.notes.trim(),
-      }))
-      .filter((line) => {
-        return line.itemName && line.quantity && Number(line.quantity) > 0;
-      });
+  const cleanedLines = useMemo(() => {
+    return lines.map((line) => ({
+      ...line,
+      itemName: line.itemName.trim(),
+      storageArea: line.storageArea.trim(),
+      quantity: line.quantity.trim(),
+      unit: line.unit.trim(),
+      packSize: line.packSize.trim(),
+      notes: line.notes.trim(),
+    }));
   }, [lines]);
+
+  const validLines = useMemo(() => {
+    return cleanedLines.filter((line) => {
+      return (
+        line.itemName &&
+        line.quantity &&
+        Number(line.quantity) > 0 &&
+        line.unit
+      );
+    });
+  }, [cleanedLines]);
 
   function updateLine(id: string, patch: Partial<CountLine>) {
     setLines((current) =>
@@ -199,7 +245,17 @@ export default function CountPage() {
     }
 
     if (!validLines.length) {
-      setStatus("Add at least one item with a quantity greater than zero.");
+      setStatus("Add at least one item with an item name, quantity, and count unit.");
+      setStatusType("error");
+      return;
+    }
+
+    const numericUnitLine = validLines.find((line) => isNumericOnly(line.unit));
+
+    if (numericUnitLine) {
+      setStatus(
+        `For ${numericUnitLine.itemName}, Count unit should be a word like boxes, cases, lb, or each. Put pack size like "50 lb each" in Pack / size note.`
+      );
       setStatusType("error");
       return;
     }
@@ -211,10 +267,19 @@ export default function CountPage() {
     try {
       const formData = new FormData();
 
+      const submittedLines = validLines.map((line) => ({
+        id: line.id,
+        itemName: line.itemName,
+        storageArea: line.storageArea,
+        quantity: line.quantity,
+        unit: line.unit,
+        notes: buildSubmittedNotes(line),
+      }));
+
       formData.append("sessionName", buildSessionName());
       formData.append("counterName", counterName.trim());
       formData.append("sessionNotes", sessionNotes.trim());
-      formData.append("lines", JSON.stringify(validLines));
+      formData.append("lines", JSON.stringify(submittedLines));
 
       if (selectedFile) {
         formData.append("countPhoto", selectedFile);
@@ -282,6 +347,12 @@ export default function CountPage() {
           "radial-gradient(circle at 18% 10%, rgba(34,211,238,0.18), transparent 28%), radial-gradient(circle at 82% 18%, rgba(99,102,241,0.16), transparent 28%), linear-gradient(135deg, #03101C 0%, #071827 46%, #0B1324 100%)",
       }}
     >
+      <datalist id="common-count-units">
+        {COMMON_UNITS.map((unit) => (
+          <option key={unit} value={unit} />
+        ))}
+      </datalist>
+
       <div className="mx-auto flex min-h-[calc(100svh-40px)] max-w-md flex-col justify-center">
         <section
           className="rounded-[30px] border p-5 shadow-2xl"
@@ -463,39 +534,88 @@ export default function CountPage() {
                         ))}
                       </select>
 
-                      <div className="grid grid-cols-[1fr_0.9fr] gap-3">
-                        <input
-                          value={line.quantity}
-                          onChange={(event) =>
-                            updateLine(line.id, { quantity: event.target.value })
-                          }
-                          type="number"
-                          inputMode="decimal"
-                          min="0"
-                          step="0.01"
-                          placeholder="Qty"
-                          className="w-full rounded-2xl border px-4 py-3 text-sm outline-none"
-                          style={{
-                            color: "#F8FAFC",
-                            background: "rgba(2,8,23,0.40)",
-                            borderColor: "rgba(255,255,255,0.11)",
-                          }}
-                        />
+                      <div className="grid grid-cols-[0.7fr_1fr] gap-3">
+                        <div>
+                          <label
+                            className="text-[10px] font-bold uppercase tracking-[0.14em]"
+                            style={{ color: "rgba(226,232,240,0.54)" }}
+                          >
+                            How many
+                          </label>
 
-                        <input
-                          value={line.unit}
-                          onChange={(event) =>
-                            updateLine(line.id, { unit: event.target.value })
-                          }
-                          placeholder="Unit"
-                          className="w-full rounded-2xl border px-4 py-3 text-sm outline-none"
-                          style={{
-                            color: "#F8FAFC",
-                            background: "rgba(2,8,23,0.40)",
-                            borderColor: "rgba(255,255,255,0.11)",
-                          }}
-                        />
+                          <input
+                            value={line.quantity}
+                            onChange={(event) =>
+                              updateLine(line.id, { quantity: event.target.value })
+                            }
+                            type="number"
+                            inputMode="decimal"
+                            min="0"
+                            step="0.01"
+                            placeholder="2"
+                            className="mt-1 w-full rounded-2xl border px-4 py-3 text-sm outline-none"
+                            style={{
+                              color: "#F8FAFC",
+                              background: "rgba(2,8,23,0.40)",
+                              borderColor: "rgba(255,255,255,0.11)",
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          <label
+                            className="text-[10px] font-bold uppercase tracking-[0.14em]"
+                            style={{ color: "rgba(226,232,240,0.54)" }}
+                          >
+                            Count unit
+                          </label>
+
+                          <input
+                            value={line.unit}
+                            onChange={(event) =>
+                              updateLine(line.id, { unit: event.target.value })
+                            }
+                            list="common-count-units"
+                            placeholder="boxes, cases, lb..."
+                            className="mt-1 w-full rounded-2xl border px-4 py-3 text-sm outline-none"
+                            style={{
+                              color: "#F8FAFC",
+                              background: "rgba(2,8,23,0.40)",
+                              borderColor: isNumericOnly(line.unit)
+                                ? "rgba(248,113,113,0.56)"
+                                : "rgba(255,255,255,0.11)",
+                            }}
+                          />
+                        </div>
                       </div>
+
+                      <input
+                        value={line.packSize}
+                        onChange={(event) =>
+                          updateLine(line.id, { packSize: event.target.value })
+                        }
+                        placeholder="Pack / size note, like 50 lb each or 24 per case"
+                        className="w-full rounded-2xl border px-4 py-3 text-sm outline-none"
+                        style={{
+                          color: "#F8FAFC",
+                          background: "rgba(2,8,23,0.40)",
+                          borderColor: "rgba(255,255,255,0.11)",
+                        }}
+                      />
+
+                      {isNumericOnly(line.unit) && (
+                        <div
+                          className="rounded-2xl border px-3 py-2 text-xs leading-5"
+                          style={{
+                            color: "#FCA5A5",
+                            background: "rgba(127,29,29,0.18)",
+                            borderColor: "rgba(248,113,113,0.22)",
+                          }}
+                        >
+                          Unit should be a word like boxes, cases, lb, or each.
+                          Put size details like 50 lb each in Pack / size note.
+                        </div>
+                      )}
 
                       <textarea
                         value={line.notes}
@@ -511,6 +631,21 @@ export default function CountPage() {
                           borderColor: "rgba(255,255,255,0.11)",
                         }}
                       />
+
+                      <div
+                        className="rounded-2xl border px-3 py-2 text-[11px] leading-5"
+                        style={{
+                          color: "rgba(226,232,240,0.62)",
+                          background: "rgba(255,255,255,0.045)",
+                          borderColor: "rgba(255,255,255,0.08)",
+                        }}
+                      >
+                        Example: <span style={{ color: "#E0F2FE" }}>2</span>{" "}
+                        counted as{" "}
+                        <span style={{ color: "#E0F2FE" }}>boxes</span>, pack
+                        note{" "}
+                        <span style={{ color: "#E0F2FE" }}>50 lb each</span>.
+                      </div>
                     </div>
                   </div>
                 ))}
